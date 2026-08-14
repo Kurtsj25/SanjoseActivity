@@ -6,18 +6,30 @@ function ElectricityBill() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
-  const handleCalculate = () => {
+  const handleCalculate = (e) => {
+    e.preventDefault();
+
     setError("");
     setResult(null);
 
-    if (!customerName.trim() || consumption === "") {
+    if (!customerName.trim() && consumption === "") {
       setError("Please enter customer name and electricity consumption.");
+      return;
+    }
+
+    if (!customerName.trim()) {
+      setError("Please enter the customer name.");
+      return;
+    }
+
+    if (consumption === "") {
+      setError("Please enter electricity consumption.");
       return;
     }
 
     const kwh = Number(consumption);
 
-    if (kwh < 0) {
+    if (Number.isNaN(kwh) || kwh < 0) {
       setError("Please enter a valid electricity consumption.");
       return;
     }
@@ -36,16 +48,13 @@ function ElectricityBill() {
 
     const totalBill = kwh * rate;
 
-    let status = "";
-
-    if (totalBill >= 5000) {
-      status = "High Electricity Usage";
-    } else {
-      status = "Normal Electricity Usage";
-    }
+    const status =
+      totalBill >= 5000
+        ? "High Electricity Usage"
+        : "Normal Electricity Usage";
 
     setResult({
-      customerName,
+      customerName: customerName.trim(),
       consumption: kwh,
       rate,
       totalBill,
@@ -60,152 +69,226 @@ function ElectricityBill() {
     setError("");
   };
 
+  const handleCustomerChange = (e) => {
+    setCustomerName(e.target.value);
+    setResult(null);
+    setError("");
+  };
+
+  const handleConsumptionChange = (e) => {
+    setConsumption(e.target.value);
+    setResult(null);
+    setError("");
+  };
+
+  const formatCurrency = (amount) =>
+    amount.toLocaleString("en-PH", {
+      style: "currency",
+      currency: "PHP",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
   return (
-    <div className="flex min-h-[calc(100vh-70px)] items-start justify-center bg-[#f3f7fb] pt-20">
-      <div className="w-[490px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md">
-        {/* Header */}
-        <div className="bg-[#4f3df5] px-7 py-6 text-white">
-          <h1 className="text-2xl font-bold">
-            Electricity Bill Calculator
-          </h1>
+    <main className="min-h-[calc(100vh-68px)] px-4 py-12 sm:px-6 md:py-16">
+      <div className="mx-auto w-full max-w-md">
+        <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d1520]/85">
+          {/* HEADER */}
+          <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
+            <div className="mb-4 flex items-center justify-between">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                Activity 04
+              </p>
 
-          <p className="mt-2 text-sm text-indigo-100">
-            Activity 4
-          </p>
-        </div>
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-xs font-bold text-white">
+                04
+              </span>
+            </div>
 
-        {/* Body */}
-        <div className="px-7 py-8">
-          {/* Customer Name */}
-          <div className="mb-5">
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Customer Name
-            </label>
+            <h1 className="text-2xl font-semibold tracking-tight text-white">
+              Electricity Bill Calculator
+            </h1>
 
-            <input
-              type="text"
-              placeholder="Enter customer name"
-              value={customerName}
-              onChange={(e) => {
-                setCustomerName(e.target.value);
-                setError("");
-              }}
-              className="h-12 w-full rounded-lg border border-slate-300 px-4 text-slate-800 outline-none placeholder:text-slate-400 focus:border-[#4f3df5] focus:ring-2 focus:ring-indigo-100"
-            />
-          </div>
-
-          {/* Consumption */}
-          <div className="mb-5">
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Electricity Consumption (kWh)
-            </label>
-
-            <input
-              type="number"
-              min="0"
-              placeholder="Enter consumption in kWh"
-              value={consumption}
-              onChange={(e) => {
-                setConsumption(e.target.value);
-                setError("");
-              }}
-              className="h-12 w-full rounded-lg border border-slate-300 px-4 text-slate-800 outline-none placeholder:text-slate-400 focus:border-[#4f3df5] focus:ring-2 focus:ring-indigo-100"
-            />
-          </div>
-
-          {/* Buttons */}
-          <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={handleCalculate}
-              className="h-12 flex-1 rounded-lg bg-[#4f3df5] font-semibold text-white transition hover:bg-[#4331e8]"
-            >
-              Calculate Bill
-            </button>
-
-            <button
-              type="button"
-              onClick={handleClear}
-              className="h-12 flex-1 rounded-lg bg-slate-100 font-semibold text-slate-700 transition hover:bg-slate-200"
-            >
-              Clear
-            </button>
-          </div>
-
-          {/* Error */}
-          {error && (
-            <p className="mt-5 text-center text-sm font-medium text-red-500">
-              {error}
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              Calculate an electricity bill based on consumption and the
+              corresponding rate per kWh.
             </p>
-          )}
+          </div>
 
-          {/* Result */}
-          {result && (
-            <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-5">
-              <div className="space-y-3">
-                <div className="flex justify-between gap-4">
+          {/* BODY */}
+          <div className="px-6 py-7 sm:px-7">
+            <form onSubmit={handleCalculate} className="space-y-5">
+              {/* CUSTOMER NAME */}
+              <div>
+                <label
+                  htmlFor="customerName"
+                  className="mb-2 block text-sm font-medium text-slate-300"
+                >
+                  Customer Name
+                </label>
+
+                <input
+                  id="customerName"
+                  type="text"
+                  placeholder="Enter customer name"
+                  value={customerName}
+                  onChange={handleCustomerChange}
+                  className="h-12 w-full rounded-lg border border-white/[0.1] bg-white/[0.04] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-violet-500/60 focus:bg-white/[0.06]"
+                />
+              </div>
+
+              {/* CONSUMPTION */}
+              <div>
+                <div className="mb-2 flex items-center justify-between">
+                  <label
+                    htmlFor="consumption"
+                    className="text-sm font-medium text-slate-300"
+                  >
+                    Consumption
+                  </label>
+
+                  <span className="text-xs text-slate-600">
+                    kWh
+                  </span>
+                </div>
+
+                <div className="relative">
+                  <input
+                    id="consumption"
+                    type="number"
+                    min="0"
+                    step="any"
+                    placeholder="Enter electricity consumption"
+                    value={consumption}
+                    onChange={handleConsumptionChange}
+                    className="h-12 w-full rounded-lg border border-white/[0.1] bg-white/[0.04] px-4 pr-14 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-violet-500/60 focus:bg-white/[0.06]"
+                  />
+
+                  <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-600">
+                    kWh
+                  </span>
+                </div>
+              </div>
+
+              {/* ERROR MESSAGE */}
+              {error && (
+                <div
+                  role="alert"
+                  className="rounded-lg border border-red-500/20 bg-red-500/[0.07] px-4 py-3"
+                >
+                  <p className="text-sm text-red-300">
+                    {error}
+                  </p>
+                </div>
+              )}
+
+              {/* BUTTONS */}
+              <div className="flex gap-3">
+                <button
+                  type="submit"
+                  className="h-12 flex-1 rounded-lg bg-gradient-to-r from-indigo-600 to-violet-600 text-sm font-semibold text-white transition hover:opacity-90"
+                >
+                  Calculate Bill
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="h-12 flex-1 rounded-lg border border-white/[0.1] bg-white/[0.05] text-sm font-semibold text-slate-300 transition hover:bg-white/[0.09] hover:text-white"
+                >
+                  Clear
+                </button>
+              </div>
+            </form>
+
+            {/* RESULT */}
+            {result && (
+              <div className="mt-7 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.025]">
+                {/* RESULT HEADER */}
+                <div className="flex items-center justify-between border-b border-white/[0.07] px-5 py-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    Bill Summary
+                  </p>
+
+                  <span
+                    className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                      result.status === "High Electricity Usage"
+                        ? "border-red-500/20 bg-red-500/10 text-red-400"
+                        : "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
+                    }`}
+                  >
+                    {result.status === "High Electricity Usage"
+                      ? "High Usage"
+                      : "Normal Usage"}
+                  </span>
+                </div>
+
+                {/* CUSTOMER */}
+                <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
                   <span className="text-sm text-slate-500">
-                    Customer Name
+                    Customer
                   </span>
 
-                  <span className="font-semibold text-slate-800">
+                  <span className="text-right text-sm font-semibold text-white">
                     {result.customerName}
                   </span>
                 </div>
 
-                <div className="flex justify-between gap-4">
+                {/* CONSUMPTION */}
+                <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
                   <span className="text-sm text-slate-500">
                     Consumption
                   </span>
 
-                  <span className="font-semibold text-slate-800">
-                    {result.consumption} kWh
+                  <span className="text-sm font-semibold text-white">
+                    {result.consumption.toLocaleString()} kWh
                   </span>
                 </div>
 
-                <div className="flex justify-between gap-4">
+                {/* RATE */}
+                <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
                   <span className="text-sm text-slate-500">
                     Rate Applied
                   </span>
 
-                  <span className="font-semibold text-slate-800">
-                    ₱{result.rate}/kWh
+                  <span className="text-sm font-semibold text-white">
+                    ₱{result.rate.toFixed(2)} / kWh
                   </span>
                 </div>
 
-                <div className="border-t border-slate-200 pt-3">
-                  <div className="flex justify-between gap-4">
-                    <span className="font-semibold text-slate-700">
-                      Total Bill
-                    </span>
+                {/* TOTAL BILL */}
+                <div className="border-b border-white/[0.07] bg-white/[0.02] px-5 py-5">
+                  <p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-600">
+                    Total Bill
+                  </p>
 
-                    <span className="text-lg font-bold text-[#4f3df5]">
-                      ₱{result.totalBill.toLocaleString()}
-                    </span>
-                  </div>
+                  <p className="mt-1 text-3xl font-semibold tracking-tight text-white">
+                    {formatCurrency(result.totalBill)}
+                  </p>
                 </div>
 
-                <div className="flex justify-between gap-4">
+                {/* USAGE STATUS */}
+                <div className="flex items-center justify-between gap-4 px-5 py-4">
                   <span className="text-sm text-slate-500">
                     Usage Status
                   </span>
 
                   <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                    className={`text-right text-sm font-semibold ${
                       result.status === "High Electricity Usage"
-                        ? "bg-red-100 text-red-600"
-                        : "bg-green-100 text-green-700"
+                        ? "text-red-400"
+                        : "text-emerald-400"
                     }`}
                   >
                     {result.status}
                   </span>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

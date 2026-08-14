@@ -10,14 +10,26 @@ function AttendanceChecker() {
     setError("");
     setResult(null);
 
-    if (!employeeName.trim() || timeIn === "") {
+    // Input validation
+    if (!employeeName.trim() && timeIn === "") {
       setError("Please enter employee name and time in.");
+      return;
+    }
+
+    if (!employeeName.trim()) {
+      setError("Please enter the employee name.");
+      return;
+    }
+
+    if (timeIn === "") {
+      setError("Please enter the employee's time in.");
       return;
     }
 
     const time = Number(timeIn);
 
-    if (time < 0 || time > 24) {
+    // Numeric validation
+    if (Number.isNaN(time) || time < 0 || time > 24) {
       setError("Please enter a valid time.");
       return;
     }
@@ -25,6 +37,7 @@ function AttendanceChecker() {
     let status = "";
     let message = "";
 
+    // Attendance conditions
     if (time <= 7) {
       status = "On Time";
       message = "Status: On Time – Good job!";
@@ -37,7 +50,7 @@ function AttendanceChecker() {
     }
 
     setResult({
-      employeeName,
+      employeeName: employeeName.trim(),
       timeIn: time,
       status,
       message,
@@ -51,138 +64,224 @@ function AttendanceChecker() {
     setError("");
   };
 
+  const handleEmployeeChange = (e) => {
+    setEmployeeName(e.target.value);
+    setResult(null);
+    setError("");
+  };
+
+  const handleTimeChange = (e) => {
+    setTimeIn(e.target.value);
+    setResult(null);
+    setError("");
+  };
+
+  const getStatusStyle = (status) => {
+    if (status === "On Time") {
+      return "border-emerald-500/20 bg-emerald-500/10 text-emerald-400";
+    }
+
+    if (status === "Late") {
+      return "border-amber-500/20 bg-amber-500/10 text-amber-400";
+    }
+
+    return "border-red-500/20 bg-red-500/10 text-red-400";
+  };
+
+  const getMessageStyle = (status) => {
+    if (status === "On Time") {
+      return "text-emerald-400";
+    }
+
+    if (status === "Late") {
+      return "text-amber-400";
+    }
+
+    return "text-red-400";
+  };
+
   return (
-    <div className="flex min-h-[calc(100vh-70px)] items-start justify-center bg-[#f3f7fb] pt-20">
-      <div className="w-[490px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md">
-        {/* Header */}
-        <div className="bg-[#4f3df5] px-7 py-6 text-white">
-          <h1 className="text-2xl font-bold">
-            Employee Attendance Checker
-          </h1>
+    <main className="min-h-[calc(100vh-68px)] px-4 py-12 sm:px-6 md:py-16">
+      <div className="mx-auto w-full max-w-md">
+        <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d1520]/85">
+          {/* HEADER */}
+          <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
+            <div className="mb-4 flex items-center justify-between">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                Activity 05
+              </p>
 
-          <p className="mt-2 text-sm text-indigo-100">
-            Activity 5
-          </p>
-        </div>
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 text-xs font-bold text-white">
+                05
+              </span>
+            </div>
 
-        {/* Body */}
-        <div className="px-7 py-8">
-          {/* Employee Name */}
-          <div className="mb-5">
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Employee Name
-            </label>
+            <h1 className="text-2xl font-semibold tracking-tight text-white">
+              Employee Attendance Checker
+            </h1>
 
-            <input
-              type="text"
-              placeholder="Enter employee name"
-              value={employeeName}
-              onChange={(e) => {
-                setEmployeeName(e.target.value);
-                setError("");
-              }}
-              className="h-12 w-full rounded-lg border border-slate-300 px-4 text-slate-800 outline-none placeholder:text-slate-400 focus:border-[#4f3df5] focus:ring-2 focus:ring-indigo-100"
-            />
-          </div>
-
-          {/* Time In */}
-          <div className="mb-5">
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Time In
-            </label>
-
-            <input
-              type="number"
-              step="0.1"
-              placeholder="e.g. 8.5 = 8:30 AM"
-              value={timeIn}
-              onChange={(e) => {
-                setTimeIn(e.target.value);
-                setError("");
-              }}
-              className="h-12 w-full rounded-lg border border-slate-300 px-4 text-slate-800 outline-none placeholder:text-slate-400 focus:border-[#4f3df5] focus:ring-2 focus:ring-indigo-100"
-            />
-          </div>
-
-          {/* Buttons */}
-          <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={handleCheck}
-              className="h-12 flex-1 rounded-lg bg-[#4f3df5] font-semibold text-white transition hover:bg-[#4331e8]"
-            >
-              Check Attendance
-            </button>
-
-            <button
-              type="button"
-              onClick={handleReset}
-              className="h-12 flex-1 rounded-lg bg-slate-100 font-semibold text-slate-700 transition hover:bg-slate-200"
-            >
-              Reset
-            </button>
-          </div>
-
-          {/* Error */}
-          {error && (
-            <p className="mt-5 text-center text-sm font-medium text-red-500">
-              {error}
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              Classify a decimal time-in value as On Time, Late, or Very Late.
             </p>
-          )}
+          </div>
 
-          {/* Result */}
-          {result && (
-            <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-5">
-              <div className="space-y-3">
-                <div className="flex justify-between gap-4">
-                  <span className="text-sm text-slate-500">
-                    Employee Name
-                  </span>
+          {/* BODY */}
+          <div className="px-6 py-7 sm:px-7">
+            {/* EMPLOYEE NAME */}
+            <div>
+              <label
+                htmlFor="employeeName"
+                className="mb-2 block text-sm font-medium text-slate-300"
+              >
+                Employee Name
+              </label>
 
-                  <span className="font-semibold text-slate-800">
-                    {result.employeeName}
-                  </span>
-                </div>
+              <input
+                id="employeeName"
+                type="text"
+                placeholder="Enter employee name"
+                value={employeeName}
+                onChange={handleEmployeeChange}
+                className="h-12 w-full rounded-lg border border-white/[0.1] bg-white/[0.04] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-purple-500/60 focus:bg-white/[0.06]"
+              />
+            </div>
 
-                <div className="flex justify-between gap-4">
-                  <span className="text-sm text-slate-500">
-                    Time In
-                  </span>
+            {/* TIME IN */}
+            <div className="mt-5">
+              <div className="mb-2 flex items-center justify-between">
+                <label
+                  htmlFor="timeIn"
+                  className="text-sm font-medium text-slate-300"
+                >
+                  Time In
+                </label>
 
-                  <span className="font-semibold text-slate-800">
-                    {result.timeIn}
-                  </span>
-                </div>
+                <span className="text-xs text-slate-600">
+                  Decimal time
+                </span>
+              </div>
 
-                <div className="flex items-center justify-between gap-4">
-                  <span className="text-sm text-slate-500">
-                    Attendance Status
-                  </span>
+              <input
+                id="timeIn"
+                type="number"
+                step="0.1"
+                placeholder="e.g. 8.5"
+                value={timeIn}
+                onChange={handleTimeChange}
+                className="h-12 w-full rounded-lg border border-white/[0.1] bg-white/[0.04] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-purple-500/60 focus:bg-white/[0.06]"
+              />
+
+              <p className="mt-2 text-xs leading-5 text-slate-600">
+                Example: 8.5 = 8:30 AM
+              </p>
+            </div>
+
+            {/* ERROR MESSAGE */}
+            {error && (
+              <div
+                role="alert"
+                className="mt-5 rounded-lg border border-red-500/20 bg-red-500/[0.07] px-4 py-3"
+              >
+                <p className="text-sm text-red-300">
+                  {error}
+                </p>
+              </div>
+            )}
+
+            {/* BUTTONS */}
+            <div className="mt-5 flex gap-3">
+              <button
+                type="button"
+                onClick={handleCheck}
+                className="h-12 flex-1 rounded-lg bg-gradient-to-r from-violet-600 to-purple-600 text-sm font-semibold text-white transition hover:opacity-90"
+              >
+                Check Attendance
+              </button>
+
+              <button
+                type="button"
+                onClick={handleReset}
+                className="h-12 flex-1 rounded-lg border border-white/[0.1] bg-white/[0.05] text-sm font-semibold text-slate-300 transition hover:bg-white/[0.09] hover:text-white"
+              >
+                Reset
+              </button>
+            </div>
+
+            {/* RESULT PANEL */}
+            {result && (
+              <div className="mt-7 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.025]">
+                {/* RESULT HEADER */}
+                <div className="flex items-center justify-between border-b border-white/[0.07] px-5 py-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    Attendance Result
+                  </p>
 
                   <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                      result.status === "On Time"
-                        ? "bg-green-100 text-green-700"
-                        : result.status === "Late"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-red-100 text-red-600"
-                    }`}
+                    className={`rounded-full border px-3 py-1 text-xs font-semibold ${getStatusStyle(
+                      result.status
+                    )}`}
                   >
                     {result.status}
                   </span>
                 </div>
 
-                <div className="border-t border-slate-200 pt-3">
-                  <p className="text-sm leading-6 text-slate-600">
+                {/* EMPLOYEE NAME */}
+                <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
+                  <span className="text-sm text-slate-500">
+                    Employee Name
+                  </span>
+
+                  <span className="text-right text-sm font-semibold text-white">
+                    {result.employeeName}
+                  </span>
+                </div>
+
+                {/* TIME IN */}
+                <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
+                  <span className="text-sm text-slate-500">
+                    Time In
+                  </span>
+
+                  <span className="text-sm font-semibold text-white">
+                    {result.timeIn}
+                  </span>
+                </div>
+
+                {/* ATTENDANCE STATUS */}
+                <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
+                  <span className="text-sm text-slate-500">
+                    Attendance Status
+                  </span>
+
+                  <span
+                    className={`rounded-lg border px-3 py-1.5 text-sm font-semibold ${getStatusStyle(
+                      result.status
+                    )}`}
+                  >
+                    {result.status}
+                  </span>
+                </div>
+
+                {/* FOLLOW-UP MESSAGE */}
+                <div className="px-5 py-4">
+                  <p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-600">
+                    Follow-up Message
+                  </p>
+
+                  <p
+                    className={`mt-2 text-sm font-medium leading-6 ${getMessageStyle(
+                      result.status
+                    )}`}
+                  >
                     {result.message}
                   </p>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

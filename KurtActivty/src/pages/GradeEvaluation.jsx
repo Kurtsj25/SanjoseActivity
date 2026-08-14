@@ -8,11 +8,22 @@ function GradeEvaluation() {
 
   const handleEvaluate = (e) => {
     e.preventDefault();
+
     setError("");
     setResult(null);
 
-    if (!studentName.trim() || score === "") {
+    if (!studentName.trim() && score === "") {
       setError("Please enter student name and score.");
+      return;
+    }
+
+    if (!studentName.trim()) {
+      setError("Please enter the student's name.");
+      return;
+    }
+
+    if (score === "") {
+      setError("Please enter the student's score.");
       return;
     }
 
@@ -38,7 +49,7 @@ function GradeEvaluation() {
     }
 
     setResult({
-      studentName,
+      studentName: studentName.trim(),
       score: numericScore,
       remarks,
     });
@@ -51,87 +62,197 @@ function GradeEvaluation() {
     setError("");
   };
 
+  const getRemarkStyle = (remarks) => {
+    if (remarks === "Excellent") {
+      return "border-emerald-500/20 bg-emerald-500/10 text-emerald-400";
+    }
+
+    if (remarks === "Very Good") {
+      return "border-blue-500/20 bg-blue-500/10 text-blue-400";
+    }
+
+    if (remarks === "Good") {
+      return "border-cyan-500/20 bg-cyan-500/10 text-cyan-400";
+    }
+
+    if (remarks === "Passed") {
+      return "border-amber-500/20 bg-amber-500/10 text-amber-400";
+    }
+
+    return "border-red-500/20 bg-red-500/10 text-red-400";
+  };
+
   return (
-    <div className="flex min-h-[calc(100vh-70px)] items-start justify-center bg-[#f3f7fb] pt-20">
-      <div className="w-[490px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md">
-        {/* Header */}
-        <div className="bg-[#4f3df5] px-7 py-6 text-white">
-          <h1 className="text-2xl font-bold">Student Grade Evaluation</h1>
-          <p className="mt-2 text-sm text-indigo-100">Activity 2</p>
-        </div>
+    <main className="min-h-[calc(100vh-68px)] px-4 py-12 sm:px-6 md:py-16">
+      <div className="mx-auto w-full max-w-md">
+        <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d1520]/85">
+          {/* HEADER */}
+          <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
+            <div className="mb-4 flex items-center justify-between">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                Activity 02
+              </p>
 
-        {/* Form */}
-        <div className="px-7 py-8">
-          <form onSubmit={handleEvaluate}>
-            <div className="mb-5">
-              <label className="mb-2 block text-sm font-semibold text-slate-800">
-                Student Name
-              </label>
-              <input
-                type="text"
-                placeholder="Enter student name"
-                value={studentName}
-                onChange={(e) => setStudentName(e.target.value)}
-                className="h-12 w-full rounded-lg border border-slate-300 px-4 text-slate-800 outline-none placeholder:text-slate-400 focus:border-[#4f3df5] focus:ring-2 focus:ring-indigo-100"
-              />
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 text-xs font-bold text-white">
+                02
+              </span>
             </div>
 
-            <div className="mb-5">
-              <label className="mb-2 block text-sm font-semibold text-slate-800">
-                Score
-              </label>
-              <input
-                type="number"
-                placeholder="Enter score (0-100)"
-                value={score}
-                onChange={(e) => setScore(e.target.value)}
-                className="h-12 w-full rounded-lg border border-slate-300 px-4 text-slate-800 outline-none placeholder:text-slate-400 focus:border-[#4f3df5] focus:ring-2 focus:ring-indigo-100"
-              />
-            </div>
+            <h1 className="text-2xl font-semibold tracking-tight text-white">
+              Student Grade Evaluation
+            </h1>
 
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                className="h-12 flex-1 rounded-lg bg-[#4f3df5] font-semibold text-white transition hover:bg-[#4331e8]"
-              >
-                Evaluate
-              </button>
-
-              <button
-                type="button"
-                onClick={handleClear}
-                className="h-12 flex-1 rounded-lg bg-slate-100 font-semibold text-slate-700 transition hover:bg-slate-200"
-              >
-                Clear
-              </button>
-            </div>
-          </form>
-
-          {error && (
-            <p className="mt-5 text-center text-sm font-medium text-red-500">
-              {error}
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              Enter a student's score to calculate the corresponding grade
+              remark.
             </p>
-          )}
+          </div>
 
-          {result && (
-            <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <p className="mb-2 text-sm text-slate-600">
-                <span className="font-semibold text-slate-800">Student Name:</span>{" "}
-                {result.studentName}
-              </p>
-              <p className="mb-2 text-sm text-slate-600">
-                <span className="font-semibold text-slate-800">Score:</span>{" "}
-                {result.score}
-              </p>
-              <p className="text-sm text-slate-600">
-                <span className="font-semibold text-slate-800">Remarks:</span>{" "}
-                {result.remarks}
-              </p>
-            </div>
-          )}
+          {/* FORM */}
+          <div className="px-6 py-7 sm:px-7">
+            <form onSubmit={handleEvaluate} className="space-y-5">
+              {/* STUDENT NAME */}
+              <div>
+                <label
+                  htmlFor="studentName"
+                  className="mb-2 block text-sm font-medium text-slate-300"
+                >
+                  Student Name
+                </label>
+
+                <input
+                  id="studentName"
+                  type="text"
+                  placeholder="Enter student name"
+                  value={studentName}
+                  onChange={(e) => {
+                    setStudentName(e.target.value);
+                    if (error) setError("");
+                  }}
+                  className="h-12 w-full rounded-lg border border-white/[0.1] bg-white/[0.04] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-blue-500/60 focus:bg-white/[0.06]"
+                />
+              </div>
+
+              {/* SCORE */}
+              <div>
+                <div className="mb-2 flex items-center justify-between">
+                  <label
+                    htmlFor="score"
+                    className="text-sm font-medium text-slate-300"
+                  >
+                    Score
+                  </label>
+
+                  <span className="text-xs text-slate-600">0 – 100</span>
+                </div>
+
+                <input
+                  id="score"
+                  type="number"
+                  placeholder="Enter score"
+                  value={score}
+                  onChange={(e) => {
+                    setScore(e.target.value);
+                    if (error) setError("");
+                  }}
+                  className="h-12 w-full rounded-lg border border-white/[0.1] bg-white/[0.04] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-blue-500/60 focus:bg-white/[0.06]"
+                />
+              </div>
+
+              {/* ERROR MESSAGE */}
+              {error && (
+                <div
+                  role="alert"
+                  className="rounded-lg border border-red-500/20 bg-red-500/[0.07] px-4 py-3"
+                >
+                  <p className="text-sm text-red-300">{error}</p>
+                </div>
+              )}
+
+              {/* BUTTONS */}
+              <div className="flex gap-3">
+                <button
+                  type="submit"
+                  className="h-12 flex-1 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 text-sm font-semibold text-white transition hover:opacity-90"
+                >
+                  Evaluate
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="h-12 flex-1 rounded-lg border border-white/[0.1] bg-white/[0.05] text-sm font-semibold text-slate-300 transition hover:bg-white/[0.09] hover:text-white"
+                >
+                  Clear
+                </button>
+              </div>
+            </form>
+
+            {/* RESULT */}
+            {result && (
+              <div className="mt-7 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.025]">
+                {/* RESULT HEADER */}
+                <div className="border-b border-white/[0.07] px-5 py-4">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                      Evaluation Result
+                    </p>
+
+                    <span
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold ${getRemarkStyle(
+                        result.remarks
+                      )}`}
+                    >
+                      {result.remarks}
+                    </span>
+                  </div>
+                </div>
+
+                {/* RESULT DETAILS */}
+                <div className="px-5">
+                  {/* STUDENT */}
+                  <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] py-4">
+                    <span className="text-sm text-slate-500">
+                      Student
+                    </span>
+
+                    <span className="text-right text-sm font-semibold text-white">
+                      {result.studentName}
+                    </span>
+                  </div>
+
+                  {/* SCORE */}
+                  <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] py-4">
+                    <span className="text-sm text-slate-500">
+                      Score
+                    </span>
+
+                    <span className="text-sm font-semibold text-white">
+                      {result.score}
+                    </span>
+                  </div>
+
+                  {/* REMARKS */}
+                  <div className="flex items-center justify-between gap-4 py-4">
+                    <span className="text-sm text-slate-500">
+                      Remarks
+                    </span>
+
+                    <span
+                      className={`rounded-lg border px-3 py-1.5 text-sm font-semibold ${getRemarkStyle(
+                        result.remarks
+                      )}`}
+                    >
+                      {result.remarks}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
