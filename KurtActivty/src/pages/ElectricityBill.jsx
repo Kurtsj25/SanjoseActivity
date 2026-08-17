@@ -34,7 +34,7 @@ function ElectricityBill() {
       return;
     }
 
-    let rate = 0;
+    let rate;
 
     if (kwh <= 100) {
       rate = 10;
@@ -96,11 +96,11 @@ function ElectricityBill() {
           <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
             <div className="mb-4 flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Activity 04
+                Activity 4
               </p>
 
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-xs font-bold text-white">
-                04
+                4
               </span>
             </div>
 
@@ -217,7 +217,7 @@ function ElectricityBill() {
 
                 <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
                   <span className="text-sm text-slate-500">
-                    Customer
+                    Customer Name
                   </span>
 
                   <span className="text-right text-sm font-semibold text-white">

@@ -8,7 +8,7 @@ import AttendanceChecker from "./pages/AttendanceChecker";
 const activities = [
   {
     id: "activity1",
-    number: "01",
+    number: "1",
     title: "Login Authentication",
     description:
       "Validate sample credentials and manage login and logout state.",
@@ -17,7 +17,7 @@ const activities = [
   },
   {
     id: "activity2",
-    number: "02",
+    number: "2",
     title: "Student Grade Evaluation",
     description:
       "Enter a score and automatically evaluate the corresponding grade remark.",
@@ -26,7 +26,7 @@ const activities = [
   },
   {
     id: "activity3",
-    number: "03",
+    number: "3",
     title: "Password Strength Checker",
     description:
       "Evaluate password length and classify it as weak, medium, or strong.",
@@ -35,7 +35,7 @@ const activities = [
   },
   {
     id: "activity4",
-    number: "04",
+    number: "4",
     title: "Electricity Bill Calculator",
     description:
       "Calculate an electricity bill using consumption values and tiered rates.",
@@ -44,7 +44,7 @@ const activities = [
   },
   {
     id: "activity5",
-    number: "05",
+    number: "5",
     title: "Employee Attendance Checker",
     description:
       "Evaluate an employee's time-in and classify their attendance status.",
@@ -65,7 +65,6 @@ function App() {
   const renderHome = () => (
     <main className="min-h-[calc(100vh-68px)]">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-20 lg:px-8">
-        {/* HERO */}
         <section className="mb-12 max-w-3xl md:mb-16">
           <h1 className="text-4xl font-bold tracking-[-0.04em] text-white sm:text-5xl md:text-6xl">
             React Activity Portal
@@ -77,14 +76,12 @@ function App() {
           </p>
         </section>
 
-        {/* ACTIVITY CARDS */}
         <section className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {activities.map((activity) => (
             <article
               key={activity.id}
               className="group flex min-h-[270px] flex-col rounded-2xl border border-white/[0.08] bg-[#0d1520]/80 p-6 transition duration-200 hover:border-white/[0.16] hover:bg-[#111b29]"
             >
-              {/* CARD HEADER */}
               <div className="mb-8 flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
                   Activity {activity.number}
@@ -97,7 +94,6 @@ function App() {
                 </div>
               </div>
 
-              {/* CARD CONTENT */}
               <h2 className="text-xl font-semibold tracking-tight text-white">
                 {activity.title}
               </h2>
@@ -106,7 +102,6 @@ function App() {
                 {activity.description}
               </p>
 
-              {/* OPEN BUTTON */}
               <button
                 type="button"
                 onClick={() => setActivePage(activity.id)}
@@ -133,11 +128,9 @@ function App() {
           "radial-gradient(circle at 10% 10%, #153238 0%, transparent 32%), radial-gradient(circle at 88% 12%, #2d2144 0%, transparent 30%), radial-gradient(circle at 75% 88%, #102d46 0%, transparent 35%), radial-gradient(circle at 15% 90%, #142d2c 0%, transparent 28%), linear-gradient(135deg, #05090d 0%, #08151c 32%, #101426 66%, #180d20 100%)",
       }}
     >
-      {/* NAVBAR */}
       <nav className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#071016]/95">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-3 py-3 md:min-h-[68px] md:flex-row md:items-center md:justify-between md:py-2">
-            {/* LOGO */}
             <button
               type="button"
               onClick={() => setActivePage("home")}
@@ -159,7 +152,6 @@ function App() {
               </div>
             </button>
 
-            {/* NAVIGATION */}
             <div className="flex w-full items-center gap-1 overflow-x-auto pb-1 md:w-auto md:pb-0">
               <button
                 type="button"
@@ -174,29 +166,75 @@ function App() {
                 Home
               </button>
 
-              {activities.map((activity, index) => (
-                <button
-                  key={activity.id}
-                  type="button"
-                  onClick={() => setActivePage(activity.id)}
-                  aria-current={
-                    activePage === activity.id ? "page" : undefined
-                  }
-                  className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-medium transition ${
-                    activePage === activity.id
-                      ? "bg-white text-slate-950"
-                      : "text-slate-400 hover:bg-white/[0.06] hover:text-white"
-                  }`}
-                >
-                  Activity {index + 1}
-                </button>
-              ))}
+              <button
+                type="button"
+                onClick={() => setActivePage("activity1")}
+                aria-current={activePage === "activity1" ? "page" : undefined}
+                className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-medium transition ${
+                  activePage === "activity1"
+                    ? "bg-white text-slate-950"
+                    : "text-slate-400 hover:bg-white/[0.06] hover:text-white"
+                }`}
+              >
+                Activity 1
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActivePage("activity2")}
+                aria-current={activePage === "activity2" ? "page" : undefined}
+                className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-medium transition ${
+                  activePage === "activity2"
+                    ? "bg-white text-slate-950"
+                    : "text-slate-400 hover:bg-white/[0.06] hover:text-white"
+                }`}
+              >
+                Activity 2
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActivePage("activity3")}
+                aria-current={activePage === "activity3" ? "page" : undefined}
+                className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-medium transition ${
+                  activePage === "activity3"
+                    ? "bg-white text-slate-950"
+                    : "text-slate-400 hover:bg-white/[0.06] hover:text-white"
+                }`}
+              >
+                Activity 3
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActivePage("activity4")}
+                aria-current={activePage === "activity4" ? "page" : undefined}
+                className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-medium transition ${
+                  activePage === "activity4"
+                    ? "bg-white text-slate-950"
+                    : "text-slate-400 hover:bg-white/[0.06] hover:text-white"
+                }`}
+              >
+                Activity 4
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActivePage("activity5")}
+                aria-current={activePage === "activity5" ? "page" : undefined}
+                className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-medium transition ${
+                  activePage === "activity5"
+                    ? "bg-white text-slate-950"
+                    : "text-slate-400 hover:bg-white/[0.06] hover:text-white"
+                }`}
+              >
+                Activity 5
+              </button>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* PAGE CONTENT */}
       {activePage === "home" || !ActiveActivity ? (
         renderHome()
       ) : (

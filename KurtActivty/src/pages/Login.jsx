@@ -38,11 +38,11 @@ function Login() {
             <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
               <div className="mb-4 flex items-center justify-between">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                  Activity 01
+                  Activity 1
                 </p>
 
                 <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 text-xs font-bold text-white">
-                  01
+                  1
                 </span>
               </div>
 
@@ -149,11 +149,11 @@ function Login() {
               </div>
 
               <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Activity 01
+                Activity 1
               </p>
 
               <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white">
-                Login successful
+                Login successful!
               </h2>
 
               <p className="mt-3 text-sm text-slate-400">

@@ -29,12 +29,12 @@ function GradeEvaluation() {
 
     const numericScore = Number(score);
 
-    if (numericScore < 0 || numericScore > 100) {
+    if (Number.isNaN(numericScore) || numericScore < 0 || numericScore > 100) {
       setError("Invalid score");
       return;
     }
 
-    let remarks = "";
+    let remarks;
 
     if (numericScore >= 90) {
       remarks = "Excellent";
@@ -86,15 +86,14 @@ function GradeEvaluation() {
     <main className="min-h-[calc(100vh-68px)] px-4 py-12 sm:px-6 md:py-16">
       <div className="mx-auto w-full max-w-md">
         <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d1520]/85">
-          {/* HEADER */}
           <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
             <div className="mb-4 flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Activity 02
+                Activity 2
               </p>
 
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 text-xs font-bold text-white">
-                02
+                2
               </span>
             </div>
 
@@ -108,10 +107,8 @@ function GradeEvaluation() {
             </p>
           </div>
 
-          {/* FORM */}
           <div className="px-6 py-7 sm:px-7">
             <form onSubmit={handleEvaluate} className="space-y-5">
-              {/* STUDENT NAME */}
               <div>
                 <label
                   htmlFor="studentName"
@@ -133,7 +130,6 @@ function GradeEvaluation() {
                 />
               </div>
 
-              {/* SCORE */}
               <div>
                 <div className="mb-2 flex items-center justify-between">
                   <label
@@ -159,7 +155,6 @@ function GradeEvaluation() {
                 />
               </div>
 
-              {/* ERROR MESSAGE */}
               {error && (
                 <div
                   role="alert"
@@ -169,7 +164,6 @@ function GradeEvaluation() {
                 </div>
               )}
 
-              {/* BUTTONS */}
               <div className="flex gap-3">
                 <button
                   type="submit"
@@ -188,10 +182,8 @@ function GradeEvaluation() {
               </div>
             </form>
 
-            {/* RESULT */}
             {result && (
               <div className="mt-7 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.025]">
-                {/* RESULT HEADER */}
                 <div className="border-b border-white/[0.07] px-5 py-4">
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
@@ -208,12 +200,10 @@ function GradeEvaluation() {
                   </div>
                 </div>
 
-                {/* RESULT DETAILS */}
                 <div className="px-5">
-                  {/* STUDENT */}
                   <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] py-4">
                     <span className="text-sm text-slate-500">
-                      Student
+                      Student Name
                     </span>
 
                     <span className="text-right text-sm font-semibold text-white">
@@ -221,7 +211,6 @@ function GradeEvaluation() {
                     </span>
                   </div>
 
-                  {/* SCORE */}
                   <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] py-4">
                     <span className="text-sm text-slate-500">
                       Score
@@ -232,7 +221,6 @@ function GradeEvaluation() {
                     </span>
                   </div>
 
-                  {/* REMARKS */}
                   <div className="flex items-center justify-between gap-4 py-4">
                     <span className="text-sm text-slate-500">
                       Remarks

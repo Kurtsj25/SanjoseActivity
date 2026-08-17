@@ -32,8 +32,8 @@ function AttendanceChecker() {
       return;
     }
 
-    let status = "";
-    let message = "";
+    let status;
+    let message;
 
     if (time <= 7) {
       status = "On Time";
@@ -104,11 +104,11 @@ function AttendanceChecker() {
           <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
             <div className="mb-4 flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Activity 05
+                Activity 5
               </p>
 
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 text-xs font-bold text-white">
-                05
+                5
               </span>
             </div>
 
