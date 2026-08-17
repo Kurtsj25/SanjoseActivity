@@ -10,7 +10,6 @@ function AttendanceChecker() {
     setError("");
     setResult(null);
 
-    // Input validation
     if (!employeeName.trim() && timeIn === "") {
       setError("Please enter employee name and time in.");
       return;
@@ -28,7 +27,6 @@ function AttendanceChecker() {
 
     const time = Number(timeIn);
 
-    // Numeric validation
     if (Number.isNaN(time) || time < 0 || time > 24) {
       setError("Please enter a valid time.");
       return;
@@ -37,7 +35,6 @@ function AttendanceChecker() {
     let status = "";
     let message = "";
 
-    // Attendance conditions
     if (time <= 7) {
       status = "On Time";
       message = "Status: On Time – Good job!";
@@ -104,7 +101,6 @@ function AttendanceChecker() {
     <main className="min-h-[calc(100vh-68px)] px-4 py-12 sm:px-6 md:py-16">
       <div className="mx-auto w-full max-w-md">
         <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d1520]/85">
-          {/* HEADER */}
           <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
             <div className="mb-4 flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
@@ -125,9 +121,7 @@ function AttendanceChecker() {
             </p>
           </div>
 
-          {/* BODY */}
           <div className="px-6 py-7 sm:px-7">
-            {/* EMPLOYEE NAME */}
             <div>
               <label
                 htmlFor="employeeName"
@@ -146,7 +140,6 @@ function AttendanceChecker() {
               />
             </div>
 
-            {/* TIME IN */}
             <div className="mt-5">
               <div className="mb-2 flex items-center justify-between">
                 <label
@@ -176,19 +169,15 @@ function AttendanceChecker() {
               </p>
             </div>
 
-            {/* ERROR MESSAGE */}
             {error && (
               <div
                 role="alert"
                 className="mt-5 rounded-lg border border-red-500/20 bg-red-500/[0.07] px-4 py-3"
               >
-                <p className="text-sm text-red-300">
-                  {error}
-                </p>
+                <p className="text-sm text-red-300">{error}</p>
               </div>
             )}
 
-            {/* BUTTONS */}
             <div className="mt-5 flex gap-3">
               <button
                 type="button"
@@ -207,10 +196,8 @@ function AttendanceChecker() {
               </button>
             </div>
 
-            {/* RESULT PANEL */}
             {result && (
               <div className="mt-7 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.025]">
-                {/* RESULT HEADER */}
                 <div className="flex items-center justify-between border-b border-white/[0.07] px-5 py-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
                     Attendance Result
@@ -225,7 +212,6 @@ function AttendanceChecker() {
                   </span>
                 </div>
 
-                {/* EMPLOYEE NAME */}
                 <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
                   <span className="text-sm text-slate-500">
                     Employee Name
@@ -236,7 +222,6 @@ function AttendanceChecker() {
                   </span>
                 </div>
 
-                {/* TIME IN */}
                 <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
                   <span className="text-sm text-slate-500">
                     Time In
@@ -247,7 +232,6 @@ function AttendanceChecker() {
                   </span>
                 </div>
 
-                {/* ATTENDANCE STATUS */}
                 <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
                   <span className="text-sm text-slate-500">
                     Attendance Status
@@ -262,7 +246,6 @@ function AttendanceChecker() {
                   </span>
                 </div>
 
-                {/* FOLLOW-UP MESSAGE */}
                 <div className="px-5 py-4">
                   <p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-600">
                     Follow-up Message

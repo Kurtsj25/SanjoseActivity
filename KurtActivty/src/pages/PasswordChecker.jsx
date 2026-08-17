@@ -16,14 +16,14 @@ function PasswordChecker() {
     }
 
     if (password.length < 6) {
-      setResult("Weak Password");
-      setMessage("Status: Weak – Create a stronger password.");
+      setResult("Weak");
+      setMessage("Please create a stronger password.");
     } else if (password.length <= 9) {
-      setResult("Medium Password");
-      setMessage("Status: Medium – Consider making your password longer.");
+      setResult("Medium");
+      setMessage("Consider creating a longer password.");
     } else {
-      setResult("Strong Password");
-      setMessage("Status: Strong – You can use this password.");
+      setResult("Strong");
+      setMessage("You can use this password.");
     }
   };
 
@@ -41,30 +41,41 @@ function PasswordChecker() {
   };
 
   const getResultStyle = () => {
-    if (result === "Strong Password") {
+    if (result === "Strong") {
       return "border-emerald-500/20 bg-emerald-500/10 text-emerald-400";
     }
 
-    if (result === "Medium Password") {
+    if (result === "Medium") {
       return "border-amber-500/20 bg-amber-500/10 text-amber-400";
     }
 
     return "border-red-500/20 bg-red-500/10 text-red-400";
   };
 
+  const getMessageStyle = () => {
+    if (result === "Strong") {
+      return "text-emerald-400";
+    }
+
+    if (result === "Medium") {
+      return "text-amber-400";
+    }
+
+    return "text-red-400";
+  };
+
   return (
     <main className="min-h-[calc(100vh-68px)] px-4 py-12 sm:px-6 md:py-16">
       <div className="mx-auto w-full max-w-md">
         <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d1520]/85">
-          {/* HEADER */}
           <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
             <div className="mb-4 flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Activity 03
+                Activity 3
               </p>
 
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-bold text-white">
-                03
+                3
               </span>
             </div>
 
@@ -78,10 +89,8 @@ function PasswordChecker() {
             </p>
           </div>
 
-          {/* BODY */}
           <div className="px-6 py-7 sm:px-7">
             <form onSubmit={handleCheck}>
-              {/* PASSWORD INPUT */}
               <div>
                 <div className="mb-2 flex items-center justify-between">
                   <label
@@ -123,7 +132,6 @@ function PasswordChecker() {
                 </p>
               </div>
 
-              {/* ERROR MESSAGE */}
               {message && !result && (
                 <div
                   role="alert"
@@ -133,7 +141,6 @@ function PasswordChecker() {
                 </div>
               )}
 
-              {/* BUTTONS */}
               <div className="mt-5 flex gap-3">
                 <button
                   type="submit"
@@ -152,10 +159,8 @@ function PasswordChecker() {
               </div>
             </form>
 
-            {/* RESULT */}
             {result && (
               <div className="mt-7 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.025]">
-                {/* RESULT HEADER */}
                 <div className="flex items-center justify-between border-b border-white/[0.07] px-5 py-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
                     Password Result
@@ -164,43 +169,35 @@ function PasswordChecker() {
                   <span
                     className={`rounded-full border px-3 py-1 text-xs font-semibold ${getResultStyle()}`}
                   >
-                    {result.replace(" Password", "")}
+                    {result}
                   </span>
                 </div>
 
-                {/* RESULT DETAILS */}
                 <div className="p-5">
-                  {/* PASSWORD STATUS */}
                   <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] pb-4">
                     <span className="text-sm text-slate-500">
                       Password Status
                     </span>
 
-                    <span className="text-sm font-semibold text-white">
+                    <span
+                      className={`rounded-lg border px-3 py-1.5 text-sm font-semibold ${getResultStyle()}`}
+                    >
                       {result}
                     </span>
                   </div>
 
-                  {/* STRENGTH MESSAGE */}
                   <div className="border-b border-white/[0.07] py-4">
                     <p className="text-xs uppercase tracking-[0.14em] text-slate-600">
                       Strength Message
                     </p>
 
                     <p
-                      className={`mt-2 text-sm font-medium ${
-                        result === "Strong Password"
-                          ? "text-emerald-400"
-                          : result === "Medium Password"
-                          ? "text-amber-400"
-                          : "text-red-400"
-                      }`}
+                      className={`mt-2 text-sm font-medium ${getMessageStyle()}`}
                     >
                       {message}
                     </p>
                   </div>
 
-                  {/* STRENGTH INDICATOR */}
                   <div className="pt-4">
                     <div className="mb-3 flex items-center justify-between">
                       <span className="text-sm text-slate-500">
@@ -215,9 +212,9 @@ function PasswordChecker() {
                     <div className="flex gap-2">
                       <div
                         className={`h-2 flex-1 rounded-full ${
-                          result === "Weak Password"
+                          result === "Weak"
                             ? "bg-red-500"
-                            : result === "Medium Password"
+                            : result === "Medium"
                             ? "bg-amber-500"
                             : "bg-emerald-500"
                         }`}
@@ -225,9 +222,9 @@ function PasswordChecker() {
 
                       <div
                         className={`h-2 flex-1 rounded-full ${
-                          result === "Medium Password"
+                          result === "Medium"
                             ? "bg-amber-500"
-                            : result === "Strong Password"
+                            : result === "Strong"
                             ? "bg-emerald-500"
                             : "bg-white/[0.08]"
                         }`}
@@ -235,7 +232,7 @@ function PasswordChecker() {
 
                       <div
                         className={`h-2 flex-1 rounded-full ${
-                          result === "Strong Password"
+                          result === "Strong"
                             ? "bg-emerald-500"
                             : "bg-white/[0.08]"
                         }`}

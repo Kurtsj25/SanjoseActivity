@@ -93,7 +93,6 @@ function ElectricityBill() {
     <main className="min-h-[calc(100vh-68px)] px-4 py-12 sm:px-6 md:py-16">
       <div className="mx-auto w-full max-w-md">
         <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d1520]/85">
-          {/* HEADER */}
           <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
             <div className="mb-4 flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
@@ -115,10 +114,8 @@ function ElectricityBill() {
             </p>
           </div>
 
-          {/* BODY */}
           <div className="px-6 py-7 sm:px-7">
             <form onSubmit={handleCalculate} className="space-y-5">
-              {/* CUSTOMER NAME */}
               <div>
                 <label
                   htmlFor="customerName"
@@ -137,7 +134,6 @@ function ElectricityBill() {
                 />
               </div>
 
-              {/* CONSUMPTION */}
               <div>
                 <div className="mb-2 flex items-center justify-between">
                   <label
@@ -170,7 +166,6 @@ function ElectricityBill() {
                 </div>
               </div>
 
-              {/* ERROR MESSAGE */}
               {error && (
                 <div
                   role="alert"
@@ -182,7 +177,6 @@ function ElectricityBill() {
                 </div>
               )}
 
-              {/* BUTTONS */}
               <div className="flex gap-3">
                 <button
                   type="submit"
@@ -201,10 +195,8 @@ function ElectricityBill() {
               </div>
             </form>
 
-            {/* RESULT */}
             {result && (
               <div className="mt-7 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.025]">
-                {/* RESULT HEADER */}
                 <div className="flex items-center justify-between border-b border-white/[0.07] px-5 py-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
                     Bill Summary
@@ -223,7 +215,6 @@ function ElectricityBill() {
                   </span>
                 </div>
 
-                {/* CUSTOMER */}
                 <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
                   <span className="text-sm text-slate-500">
                     Customer
@@ -234,7 +225,6 @@ function ElectricityBill() {
                   </span>
                 </div>
 
-                {/* CONSUMPTION */}
                 <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
                   <span className="text-sm text-slate-500">
                     Consumption
@@ -245,7 +235,6 @@ function ElectricityBill() {
                   </span>
                 </div>
 
-                {/* RATE */}
                 <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
                   <span className="text-sm text-slate-500">
                     Rate Applied
@@ -256,7 +245,6 @@ function ElectricityBill() {
                   </span>
                 </div>
 
-                {/* TOTAL BILL */}
                 <div className="border-b border-white/[0.07] bg-white/[0.02] px-5 py-5">
                   <p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-600">
                     Total Bill
@@ -267,7 +255,6 @@ function ElectricityBill() {
                   </p>
                 </div>
 
-                {/* USAGE STATUS */}
                 <div className="flex items-center justify-between gap-4 px-5 py-4">
                   <span className="text-sm text-slate-500">
                     Usage Status

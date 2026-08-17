@@ -35,7 +35,6 @@ function Login() {
       <div className="mx-auto w-full max-w-md">
         {!isLoggedIn ? (
           <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d1520]/85">
-            {/* HEADER */}
             <div className="border-b border-white/[0.08] px-6 py-6 sm:px-7">
               <div className="mb-4 flex items-center justify-between">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
@@ -56,10 +55,8 @@ function Login() {
               </p>
             </div>
 
-            {/* FORM */}
             <div className="px-6 py-7 sm:px-7">
               <form onSubmit={handleSubmit} className="space-y-5">
-                {/* USERNAME */}
                 <div>
                   <label
                     htmlFor="username"
@@ -82,7 +79,6 @@ function Login() {
                   />
                 </div>
 
-                {/* PASSWORD */}
                 <div>
                   <label
                     htmlFor="password"
@@ -105,7 +101,6 @@ function Login() {
                   />
                 </div>
 
-                {/* ERROR MESSAGE */}
                 {message && (
                   <div
                     role="alert"
@@ -115,7 +110,6 @@ function Login() {
                   </div>
                 )}
 
-                {/* LOGIN BUTTON */}
                 <button
                   type="submit"
                   className="h-12 w-full rounded-lg bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600 text-sm font-semibold text-white transition hover:opacity-90"
@@ -124,7 +118,6 @@ function Login() {
                 </button>
               </form>
 
-              {/* SAMPLE CREDENTIALS */}
               <div className="mt-6 border-t border-white/[0.07] pt-5">
                 <p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-600">
                   Sample credentials
@@ -149,7 +142,6 @@ function Login() {
             </div>
           </div>
         ) : (
-          /* SUCCESS STATE */
           <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d1520]/85">
             <div className="px-7 py-9 text-center">
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-500/10 text-2xl font-semibold text-emerald-400">
